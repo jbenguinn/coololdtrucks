@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoolOldTrucks.com — Buy, Sell & Discover Vintage Trucks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rust: #C1440E;
+    --rust-dark: #8B2E06;
+    --cream: #F2EAD8;
+    --cream-dark: #E0D4BC;
+    --black: #0F0D0A;
+    --charcoal: #1E1A14;
+    --steel: #3A3530;
+    --tan: #A08060;
+    --gold: #D4A843;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–black);
+color: var(–cream);
+font-family: ‘Libre Baskerville’, Georgia, serif;
+overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 1000;
+opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 18px 48px;
+background: linear-gradient(to bottom, rgba(15,13,10,0.95), transparent);
+backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.6rem;
+letter-spacing: 0.12em;
+color: var(–cream);
+text-decoration: none;
+}
+
+.nav-logo span { color: var(–rust); }
+
+.nav-links {
+display: flex;
+gap: 36px;
+list-style: none;
+}
+
+.nav-links a {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.7rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–cream-dark);
+text-decoration: none;
+transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(–rust); }
+
+.nav-cta {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.7rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+background: var(–rust);
+color: var(–cream);
+border: none;
+padding: 10px 22px;
+cursor: pointer;
+transition: background 0.2s;
+}
+
+.nav-cta:hover { background: var(–rust-dark); }
+
+/* ── HERO ── */
+.hero {
+min-height: 100vh;
+position: relative;
+display: flex;
+align-items: flex-end;
+padding: 0 48px 80px;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute;
+inset: 0;
+background:
+linear-gradient(to top, var(–black) 0%, rgba(15,13,10,0.3) 50%, rgba(15,13,10,0.6) 100%),
+linear-gradient(135deg, #1a0f08 0%, #2d1a0e 30%, #0f0d0a 70%);
+}
+
+/* Decorative lines */
+.hero-bg::after {
+content: ‘’;
+position: absolute;
+inset: 0;
+background:
+repeating-linear-gradient(
+0deg,
+transparent,
+transparent 60px,
+rgba(193,68,14,0.04) 60px,
+rgba(193,68,14,0.04) 61px
+);
+}
+
+.hero-truck-silhouette {
+position: absolute;
+right: -40px;
+bottom: 60px;
+width: 65%;
+max-width: 900px;
+opacity: 0.12;
+filter: sepia(1) hue-rotate(10deg);
+animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+from { transform: translateX(0px); }
+to { transform: translateX(-15px); }
+}
+
+/* Big decorative year */
+.hero-year {
+position: absolute;
+right: 48px;
+top: 50%;
+transform: translateY(-50%);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(140px, 20vw, 280px);
+line-height: 1;
+color: transparent;
+-webkit-text-stroke: 1px rgba(193,68,14,0.15);
+letter-spacing: -0.02em;
+user-select: none;
+pointer-events: none;
+}
+
+.hero-content {
+position: relative;
+z-index: 2;
+max-width: 700px;
+animation: fadeUp 1s ease both;
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tag {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.68rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–rust);
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.hero-tag::before {
+content: ‘’;
+display: block;
+width: 40px;
+height: 1px;
+background: var(–rust);
+}
+
+.hero-headline {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(64px, 9vw, 130px);
+line-height: 0.92;
+letter-spacing: 0.02em;
+margin-bottom: 28px;
+}
+
+.hero-headline em {
+font-style: italic;
+color: var(–rust);
+font-family: ‘Playfair Display’, serif;
+font-size: 0.8em;
+}
+
+.hero-sub {
+font-size: 1.05rem;
+line-height: 1.7;
+color: var(–cream-dark);
+max-width: 480px;
+margin-bottom: 44px;
+font-style: italic;
+}
+
+.hero-actions {
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+align-items: center;
+}
+
+.btn-primary {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.1rem;
+letter-spacing: 0.12em;
+background: var(–rust);
+color: var(–cream);
+border: none;
+padding: 16px 40px;
+cursor: pointer;
+transition: all 0.2s;
+text-decoration: none;
+display: inline-block;
+}
+
+.btn-primary:hover {
+background: var(–rust-dark);
+transform: translateY(-2px);
+}
+
+.btn-secondary {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.72rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–cream);
+border: 1px solid rgba(242,234,216,0.3);
+padding: 16px 32px;
+cursor: pointer;
+text-decoration: none;
+transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+border-color: var(–cream);
+background: rgba(242,234,216,0.05);
+}
+
+.hero-stats {
+position: absolute;
+right: 48px;
+bottom: 80px;
+display: flex;
+flex-direction: column;
+gap: 24px;
+z-index: 2;
+}
+
+.stat {
+text-align: right;
+}
+
+.stat-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 2.4rem;
+color: var(–gold);
+line-height: 1;
+}
+
+.stat-label {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–tan);
+}
+
+/* ── TICKER ── */
+.ticker {
+background: var(–rust);
+padding: 12px 0;
+overflow: hidden;
+white-space: nowrap;
+}
+
+.ticker-inner {
+display: inline-flex;
+animation: ticker 30s linear infinite;
+}
+
+.ticker-item {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.7rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+padding: 0 48px;
+color: var(–cream);
+}
+
+.ticker-dot {
+color: rgba(242,234,216,0.5);
+}
+
+@keyframes ticker {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+
+/* ── SECTION SHARED ── */
+section {
+padding: 100px 48px;
+}
+
+.section-tag {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–rust);
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.section-tag::before {
+content: ‘’;
+display: block;
+width: 28px;
+height: 1px;
+background: var(–rust);
+}
+
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(42px, 5vw, 72px);
+line-height: 1;
+letter-spacing: 0.03em;
+margin-bottom: 12px;
+}
+
+/* ── FEATURED TRUCKS ── */
+.trucks-section {
+background: var(–charcoal);
+position: relative;
+}
+
+.trucks-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+margin-bottom: 56px;
+}
+
+.trucks-grid {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+grid-template-rows: auto auto;
+gap: 3px;
+}
+
+.truck-card {
+position: relative;
+overflow: hidden;
+cursor: pointer;
+background: var(–steel);
+}
+
+.truck-card:first-child {
+grid-row: span 2;
+}
+
+.truck-img {
+width: 100%;
+height: 100%;
+min-height: 260px;
+object-fit: cover;
+display: block;
+filter: sepia(0.3) contrast(1.1);
+transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.truck-card:first-child .truck-img {
+min-height: 540px;
+}
+
+.truck-card:hover .truck-img {
+transform: scale(1.05);
+filter: sepia(0.1) contrast(1.15);
+}
+
+.truck-overlay {
+position: absolute;
+inset: 0;
+background: linear-gradient(to top, rgba(15,13,10,0.92) 0%, rgba(15,13,10,0.1) 60%);
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+padding: 28px;
+transition: background 0.3s;
+}
+
+.truck-card:hover .truck-overlay {
+background: linear-gradient(to top, rgba(15,13,10,0.96) 0%, rgba(15,13,10,0.2) 60%);
+}
+
+.truck-badge {
+position: absolute;
+top: 20px;
+left: 20px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+background: var(–rust);
+color: var(–cream);
+padding: 5px 10px;
+}
+
+.truck-year {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.2em;
+color: var(–rust);
+margin-bottom: 6px;
+}
+
+.truck-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.6rem;
+letter-spacing: 0.05em;
+line-height: 1;
+margin-bottom: 10px;
+}
+
+.truck-card:first-child .truck-name {
+font-size: 2.4rem;
+}
+
+.truck-meta {
+display: flex;
+gap: 16px;
+align-items: center;
+}
+
+.truck-price {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.3rem;
+color: var(–gold);
+}
+
+.truck-location {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.12em;
+color: var(–tan);
+text-transform: uppercase;
+}
+
+/* Fake truck images using CSS art */
+.truck-visual {
+width: 100%;
+min-height: 260px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 80px;
+position: relative;
+overflow: hidden;
+}
+
+.truck-card:first-child .truck-visual {
+min-height: 540px;
+font-size: 120px;
+}
+
+.tv-1 { background: linear-gradient(135deg, #2a1a0f 0%, #1a0f08 50%, #0f0d0a 100%); }
+.tv-2 { background: linear-gradient(135deg, #0f1a1a 0%, #0a1010 100%); }
+.tv-3 { background: linear-gradient(135deg, #1a1008 0%, #100a05 100%); }
+.tv-4 { background: linear-gradient(135deg, #0a0f1a 0%, #060a10 100%); }
+
+.tv-label {
+position: absolute;
+bottom: 12px;
+right: 12px;
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.55rem;
+color: rgba(255,255,255,0.2);
+letter-spacing: 0.1em;
+}
+
+/* ── HOW IT WORKS ── */
+.how-section {
+background: var(–black);
+border-top: 1px solid rgba(193,68,14,0.2);
+}
+
+.how-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+margin-top: 64px;
+}
+
+.how-card {
+background: var(–charcoal);
+padding: 48px 40px;
+position: relative;
+overflow: hidden;
+transition: background 0.3s;
+}
+
+.how-card:hover {
+background: #272118;
+}
+
+.how-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 3px;
+height: 0;
+background: var(–rust);
+transition: height 0.4s ease;
+}
+
+.how-card:hover::before { height: 100%; }
+
+.how-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 5rem;
+line-height: 1;
+color: transparent;
+-webkit-text-stroke: 1px rgba(193,68,14,0.3);
+margin-bottom: 20px;
+}
+
+.how-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.8rem;
+letter-spacing: 0.05em;
+margin-bottom: 16px;
+}
+
+.how-desc {
+font-size: 0.9rem;
+line-height: 1.75;
+color: var(–cream-dark);
+font-style: italic;
+}
+
+/* ── FEES ── */
+.fees-section {
+background: var(–charcoal);
+}
+
+.fees-layout {
+display: grid;
+grid-template-columns: 1fr 1.5fr;
+gap: 80px;
+align-items: start;
+margin-top: 64px;
+}
+
+.fees-intro {
+font-size: 1rem;
+line-height: 1.8;
+color: var(–cream-dark);
+font-style: italic;
+}
+
+.fee-list {
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+
+.fee-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 24px 32px;
+background: var(–black);
+border-left: 3px solid transparent;
+transition: border-color 0.2s, background 0.2s;
+}
+
+.fee-item:hover {
+border-left-color: var(–rust);
+background: #14110d;
+}
+
+.fee-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.2rem;
+letter-spacing: 0.05em;
+}
+
+.fee-detail {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: var(–tan);
+margin-top: 4px;
+}
+
+.fee-amount {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.6rem;
+color: var(–gold);
+text-align: right;
+}
+
+/* ── EMAIL CAPTURE ── */
+.email-section {
+background: var(–rust);
+padding: 80px 48px;
+position: relative;
+overflow: hidden;
+}
+
+.email-section::before {
+content: ‘COOL OLD TRUCKS’;
+position: absolute;
+right: -20px;
+top: 50%;
+transform: translateY(-50%);
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(80px, 12vw, 160px);
+color: rgba(139,46,6,0.35);
+letter-spacing: 0.05em;
+white-space: nowrap;
+pointer-events: none;
+}
+
+.email-inner {
+position: relative;
+z-index: 2;
+max-width: 600px;
+}
+
+.email-section .section-tag { color: rgba(242,234,216,0.7); }
+.email-section .section-tag::before { background: rgba(242,234,216,0.7); }
+
+.email-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(40px, 6vw, 80px);
+line-height: 0.95;
+margin-bottom: 20px;
+color: var(–cream);
+}
+
+.email-sub {
+font-size: 1rem;
+line-height: 1.7;
+color: rgba(242,234,216,0.85);
+font-style: italic;
+margin-bottom: 36px;
+max-width: 440px;
+}
+
+.email-form {
+display: flex;
+gap: 0;
+max-width: 500px;
+}
+
+.email-input {
+flex: 1;
+padding: 18px 24px;
+background: rgba(15,13,10,0.3);
+border: 1px solid rgba(242,234,216,0.4);
+border-right: none;
+color: var(–cream);
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.8rem;
+outline: none;
+transition: border-color 0.2s;
+}
+
+.email-input::placeholder { color: rgba(242,234,216,0.4); }
+.email-input:focus { border-color: var(–cream); }
+
+.email-btn {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1rem;
+letter-spacing: 0.1em;
+background: var(–black);
+color: var(–cream);
+border: 1px solid var(–black);
+padding: 18px 32px;
+cursor: pointer;
+white-space: nowrap;
+transition: background 0.2s;
+}
+
+.email-btn:hover { background: var(–charcoal); }
+
+/* ── FOOTER ── */
+footer {
+background: var(–black);
+border-top: 1px solid rgba(193,68,14,0.15);
+padding: 56px 48px 32px;
+}
+
+.footer-top {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+margin-bottom: 48px;
+}
+
+.footer-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 2rem;
+letter-spacing: 0.1em;
+color: var(–cream);
+}
+
+.footer-logo span { color: var(–rust); }
+
+.footer-tagline {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–tan);
+margin-top: 6px;
+}
+
+.footer-links {
+display: flex;
+gap: 60px;
+}
+
+.footer-col h4 {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–rust);
+margin-bottom: 16px;
+}
+
+.footer-col ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.footer-col a {
+font-family: ‘Libre Baskerville’, serif;
+font-size: 0.85rem;
+color: var(–tan);
+text-decoration: none;
+font-style: italic;
+transition: color 0.2s;
+}
+
+.footer-col a:hover { color: var(–cream); }
+
+.footer-bottom {
+border-top: 1px solid rgba(242,234,216,0.08);
+padding-top: 24px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.footer-copy {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.12em;
+color: var(–steel);
+text-transform: uppercase;
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+opacity: 0;
+transform: translateY(24px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+nav { padding: 16px 24px; }
+.nav-links { display: none; }
+.hero { padding: 0 24px 60px; }
+.hero-stats { display: none; }
+section { padding: 60px 24px; }
+.trucks-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+.truck-card:first-child { grid-row: span 1; }
+.how-grid { grid-template-columns: 1fr; }
+.fees-layout { grid-template-columns: 1fr; gap: 40px; }
+.footer-top { flex-direction: column; gap: 40px; }
+.footer-links { flex-direction: column; gap: 32px; }
+.email-section::before { display: none; }
+.email-form { flex-direction: column; }
+.email-input { border-right: 1px solid rgba(242,234,216,0.4); border-bottom: none; }
+.trucks-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <a href="#" class="nav-logo">Cool<span>Old</span>Trucks</a>
+  <ul class="nav-links">
+    <li><a href="#listings">Browse Trucks</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#fees">Pricing</a></li>
+    <li><a href="#notify">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('notify').scrollIntoView({behavior:'smooth'})">List Your Truck</button>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-year">70s</div>
+
+  <!-- SVG Truck Silhouette -->
+
+  <svg class="hero-truck-silhouette" viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 220 L50 180 L100 180 L100 120 L280 120 L340 80 L560 80 L600 120 L700 120 L740 140 L750 180 L780 180 L780 220 Z" fill="#8B5E3C" opacity="0.8"/>
+    <circle cx="180" cy="225" r="40" fill="#3A3530"/>
+    <circle cx="180" cy="225" r="28" fill="#1E1A14"/>
+    <circle cx="620" cy="225" r="40" fill="#3A3530"/>
+    <circle cx="620" cy="225" r="28" fill="#1E1A14"/>
+    <rect x="100" y="120" width="180" height="60" rx="4" fill="#6B4423" opacity="0.6"/>
+    <rect x="340" y="80" width="220" height="40" rx="2" fill="#C1440E" opacity="0.3"/>
+    <line x1="50" y1="220" x2="780" y2="220" stroke="#3A3530" stroke-width="4"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-tag">Est. 2025 — Curated Classics</div>
+    <h1 class="hero-headline">
+      The Good<br>
+      <em>Old Days</em><br>
+      Had Better<br>
+      Trucks
+    </h1>
+    <p class="hero-sub">Buy, sell, and obsess over the finest pickup trucks from the golden era — 1970 through 1990. Real trucks. Real character. Real deals.</p>
+    <div class="hero-actions">
+      <a href="#listings" class="btn-primary">Browse Listings</a>
+      <a href="#notify" class="btn-secondary">List Your Truck</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">247</div>
+      <div class="stat-label">Active Listings</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$8.4M</div>
+      <div class="stat-label">In Trucks Sold</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12k</div>
+      <div class="stat-label">Monthly Visitors</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">1978 Ford F-150 <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1985 Chevy C10 Silverado <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1972 Dodge Power Wagon <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1979 International Scout II <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1983 GMC Sierra Classic <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1970 Ford F-100 Sport Custom <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1988 Toyota Pickup 4x4 <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1976 Chevy Blazer K5 <span class="ticker-dot">◆</span></span>
+    <!-- Duplicate for seamless loop -->
+    <span class="ticker-item">1978 Ford F-150 <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1985 Chevy C10 Silverado <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1972 Dodge Power Wagon <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1979 International Scout II <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1983 GMC Sierra Classic <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1970 Ford F-100 Sport Custom <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1988 Toyota Pickup 4x4 <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">1976 Chevy Blazer K5 <span class="ticker-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- FEATURED LISTINGS -->
+
+<section class="trucks-section" id="listings">
+  <div class="trucks-header reveal">
+    <div>
+      <div class="section-tag">Just Listed</div>
+      <h2 class="section-title">Featured Trucks</h2>
+    </div>
+    <a href="#notify" class="btn-secondary">View All 247 Listings →</a>
+  </div>
+
+  <div class="trucks-grid reveal">
+
+```
+<!-- HERO CARD -->
+<div class="truck-card">
+  <div class="truck-visual tv-1">
+    🚛
+    <div class="tv-label">Photo coming soon</div>
+  </div>
+  <div class="truck-badge">Featured</div>
+  <div class="truck-overlay">
+    <div class="truck-year">1978 · Ford</div>
+    <div class="truck-name">F-150 Ranger XLT</div>
+    <div class="truck-meta">
+      <div class="truck-price">$24,500</div>
+      <div class="truck-location">📍 Bozeman, MT</div>
+    </div>
+  </div>
+</div>
+
+<!-- CARD 2 -->
+<div class="truck-card">
+  <div class="truck-visual tv-2">🛻</div>
+  <div class="truck-badge" style="background:var(--gold);color:var(--black)">Restored</div>
+  <div class="truck-overlay">
+    <div class="truck-year">1985 · Chevrolet</div>
+    <div class="truck-name">C10 Silverado</div>
+    <div class="truck-meta">
+      <div class="truck-price">$18,900</div>
+      <div class="truck-location">📍 Austin, TX</div>
+    </div>
+  </div>
+</div>
+
+<!-- CARD 3 -->
+<div class="truck-card">
+  <div class="truck-visual tv-3">🚙</div>
+  <div class="truck-overlay">
+    <div class="truck-year">1972 · Dodge</div>
+    <div class="truck-name">Power Wagon</div>
+    <div class="truck-meta">
+      <div class="truck-price">$31,000</div>
+      <div class="truck-location">📍 Flagstaff, AZ</div>
+    </div>
+  </div>
+</div>
+
+<!-- CARD 4 -->
+<div class="truck-card">
+  <div class="truck-visual tv-4">🏔️</div>
+  <div class="truck-badge" style="background:#2a6b3a">Project</div>
+  <div class="truck-overlay">
+    <div class="truck-year">1988 · Toyota</div>
+    <div class="truck-name">Pickup 4x4</div>
+    <div class="truck-meta">
+      <div class="truck-price">$9,200</div>
+      <div class="truck-location">📍 Portland, OR</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="how-section" id="how">
+  <div class="section-tag reveal">The Process</div>
+  <h2 class="section-title reveal">How It Works</h2>
+
+  <div class="how-grid">
+
+```
+<div class="how-card reveal">
+  <div class="how-num">01</div>
+  <div class="how-title">Browse or List</div>
+  <p class="how-desc">Buyers browse curated listings of genuine 1970–1990 trucks — no junk, no clunkers, no compromises. Sellers submit their rig with photos, history, and asking price.</p>
+</div>
+
+<div class="how-card reveal" style="transition-delay:0.1s">
+  <div class="how-num">02</div>
+  <div class="how-title">We Vet Every Truck</div>
+  <p class="how-desc">Our team reviews every listing before it goes live. Buyers get peace of mind. Sellers get credibility. Everyone gets a cleaner deal.</p>
+</div>
+
+<div class="how-card reveal" style="transition-delay:0.2s">
+  <div class="how-num">03</div>
+  <div class="how-title">Deal. Drive. Done.</div>
+  <p class="how-desc">We connect buyer and seller, handle the paperwork assist, and collect a small finder's fee — our cut for making the whole thing happen clean and fast.</p>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- FEES -->
+
+<section class="fees-section" id="fees">
+  <div class="section-tag reveal">Transparent Pricing</div>
+  <h2 class="section-title reveal">What It Costs</h2>
+
+  <div class="fees-layout">
+    <div class="fees-intro reveal">
+      <p>No hidden fees. No shady handshakes. We charge honest rates for real work — listing your truck, vetting the buyers, and getting the deal done.</p>
+      <br>
+      <p>Our finder's fee is split between buyer and seller, keeping incentives aligned. The more you sell for, the better for everyone.</p>
+    </div>
+
+```
+<div class="fee-list reveal">
+  <div class="fee-item">
+    <div>
+      <div class="fee-name">Standard Listing</div>
+      <div class="fee-detail">30-day listing · up to 20 photos · basic vetting</div>
+    </div>
+    <div class="fee-amount">$19</div>
+  </div>
+  <div class="fee-item">
+    <div>
+      <div class="fee-name">Featured Listing</div>
+      <div class="fee-detail">60-day · homepage placement · priority vetting</div>
+    </div>
+    <div class="fee-amount">$49</div>
+  </div>
+  <div class="fee-item">
+    <div>
+      <div class="fee-name">Seller's Finder Fee</div>
+      <div class="fee-detail">Charged at close · on final sale price</div>
+    </div>
+    <div class="fee-amount">1.5%</div>
+  </div>
+  <div class="fee-item">
+    <div>
+      <div class="fee-name">Buyer's Finder Fee</div>
+      <div class="fee-detail">Charged at close · includes deal facilitation</div>
+    </div>
+    <div class="fee-amount">1%</div>
+  </div>
+  <div class="fee-item">
+    <div>
+      <div class="fee-name">Affiliate Partner Links</div>
+      <div class="fee-detail">Parts, insurance, financing — at no cost to you</div>
+    </div>
+    <div class="fee-amount">Free</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+
+<section class="email-section" id="notify">
+  <div class="email-inner">
+    <div class="section-tag">Early Access</div>
+    <h2 class="email-title">Get First<br>Dibs on<br>New Listings</h2>
+    <p class="email-sub">We're just getting started. Drop your email and be the first to know when new trucks land — plus get a free listing when we launch.</p>
+    <div class="email-form">
+      <input type="email" class="email-input" placeholder="your@email.com" id="emailInput">
+      <button class="email-btn" onclick="handleEmail()">Notify Me</button>
+    </div>
+    <div id="emailConfirm" style="display:none; margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(242,234,216,0.8);">
+      ✓ You're on the list. We'll be in touch.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Cool<span>Old</span>Trucks</div>
+      <div class="footer-tagline">The Marketplace for Vintage Pickup Trucks · Est. 2025</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Browse</h4>
+        <ul>
+          <li><a href="#">All Listings</a></li>
+          <li><a href="#">Ford F-Series</a></li>
+          <li><a href="#">Chevy C/K Series</a></li>
+          <li><a href="#">Dodge Power Wagon</a></li>
+          <li><a href="#">Toyota Pickups</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Buyer's Guide</a></li>
+          <li><a href="#">Pricing Trends</a></li>
+          <li><a href="#">Restoration Tips</a></li>
+          <li><a href="#">Parts & Suppliers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sell</h4>
+        <ul>
+          <li><a href="#">List a Truck</a></li>
+          <li><a href="#">Seller FAQ</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 CoolOldTrucks.com — All rights reserved</div>
+    <div class="footer-copy">Built for people who appreciate a good truck</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Email
+  function handleEmail() {
+    const val = document.getElementById('emailInput').value;
+    if (val && val.includes('@')) {
+      document.getElementById('emailInput').style.display = 'none';
+      document.querySelector('.email-btn').style.display = 'none';
+      document.getElementById('emailConfirm').style.display = 'block';
+    }
+  }
+
+  document.getElementById('emailInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleEmail();
+  });
+</script>
+
+</body>
+</html>
